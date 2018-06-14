@@ -1,0 +1,39 @@
+{
+  "name": "shrinky-link",
+  "version": "0.1.0",
+  "description": "An express/mongo programatic url shortener",
+  "main": "web/index.js",
+  "scripts": {
+    "coverage": "nyc --reporter=html npm test",
+    "coverage:summary": "nyc --reporter=text-summary npm test",
+    "lint": "eslint web test",
+    "mongo:once": "docker run -it --rm -p 27017:27017 mongo",
+    "preversion": "npm test -s",
+    "start": "node web",
+    "test": "mocha -r dotenv/config test/unit",
+    "watch": "nodemon web --watch web"
+  },
+  "author": "robb-j",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "hashids": "^1.1.4",
+    "morgan": "^1.9.0",
+    "otterjs": "^0.3.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.17.5",
+    "nyc": "^12.0.2",
+    "supertest": "^3.1.0"
+  }
+}
