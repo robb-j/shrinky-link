@@ -1,4 +1,4 @@
-# Node Sample Project
+# Shrinky Link
 
 An express/mongo programatic url shortener. A restful endpoint to create new links and an express route to redirect visitors.
 
