@@ -20,16 +20,13 @@ services:
     restart: unless-stopped
     ports:
       - 27017:27017
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: top_secret
   
   shrinky:
     image: robbj/shrinky-link
     ports:
       - 3000:3000
     environment:
-      MONGO_URI: mongodb://root:top_secret@mongo:27017/links
+      MONGO_URI: mongodb://mongo:27017/links
       SHRINK_KEY: super_duper_secret
       HOME_URL: https://github.com/robb-j/shrinky-link/
       PUBLIC_URL: https://go.r0b.io
@@ -41,7 +38,14 @@ services:
 With the above docker-compose file just run:
 
 ```bash
-docker-compose up -d
+
+# Start up mongo
+docker-compose up -d mongo
+
+# Wait a little bit for mongo to start up (~10s)
+
+# Start up shrinky
+docker-compose up -d mongo
 ```
 
 **Adding Links**
