@@ -12,6 +12,8 @@ An express/mongo programatic url shortener. A restful endpoint to create new lin
 
 An example **docker-compose.yml**
 ```yml
+version: '3'
+
 services:
   mongo:
     image: mongo:latest
