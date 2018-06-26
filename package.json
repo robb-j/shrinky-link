@@ -1,6 +1,6 @@
 {
   "name": "shrinky-link",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "An express/mongo programatic url shortener",
   "main": "web/index.js",
   "scripts": {
