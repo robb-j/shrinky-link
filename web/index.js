@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { createServer } = require('./server')
 const Otter = require('otterjs')
-const { Link, Token } = require('./models')
+const { Link, Token, addInitialToken } = require('./models')
 
 // Fail if no mongo uri was passed
 if (!process.env.MONGO_URI) {
@@ -26,4 +26,7 @@ if (!process.env.SHRINK_KEY) {
   // Setup Express server and listen on port 3000
   let app = createServer()
   await new Promise(resolve => app.listen(3000))
+  
+  // Create the initial token if needed
+  await addInitialToken(process.env.INIT_TOKEN, true)
 })()

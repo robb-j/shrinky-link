@@ -27,26 +27,30 @@ services:
     ports:
       - 3000:3000
     environment:
-      MONGO_URI: mongodb://mongo:27017/links
+      MONGO_URI: mongodb://root:top_secret@mongo:27017/links
       SHRINK_KEY: super_duper_secret
       HOME_URL: https://github.com/robb-j/shrinky-link/
+      PUBLIC_URL: https://go.r0b.io
+      INIT_TOKEN: my_first_secret_access_token
 ```
 
 **Steps**
 
-1. `docker-compose up -d`
-2. You'll need to add your token by going into you mongo db
-  1. Create a collection called `Token`
-  2. Insert a document `{ "key": "YOUR_KEY", "active": true }`
+With the above docker-compose file just run:
+
+```bash
+docker-compose up -d
+```
 
 **Adding Links**
 
-To add a link perform a post to your container, e.g. from the host running the docker-compose stack:
+To add a link perform a post to your container, e.g. from the host running the docker-compose stack.
+Where `YOUR_TOKEN` is the value you set `INIT_TOKEN` to, this is your key for creating short links.
 
 ```bash
 curl -X POST \
   -H "Content-Type: application/json" \
-  -d '{"token":"YOUR_KEY", "url":"https://google.com"}' \
+  -d '{"token":"YOUR_TOKEN", "url":"https://google.com"}' \
   http://localhost:3000
 ```
 
@@ -59,6 +63,7 @@ And you will get:
   "updatedAt": "2018-06-14T23:38:41.984Z",
   "short": "lEWxaq",
   "long": "https://google.com",
+  "public": "https://go.r0b.io/lEWxaq",
   "uses": 0,
   "active": true,
   "creator_id": "5b22f62a67dad80010e54232"
@@ -80,12 +85,19 @@ curl -i http://localhost:3000/lEWxaq
 | `MONGO_URI`  | Where the mongo db is, [more info](https://docs.mongodb.com/manual/reference/connection-string/) |
 | `SHRINK_KEY` | A salt for generating unique short links, [more info](https://github.com/ivanakimov/hashids.js#more-options)
 | `HOME_URL`   | (optional) A backup url for if no path is passed, i.e. someone visits the root path |
+| `PUBLIC_URL` | (optional) The public facing url of the shortener, `public` will be excluded from the output if this is not set |
+| `INIT_TOKEN` | (optional) Set this to add a token to the database when the container starts up |
+
+## Database inspection
+
+Two mongo collections are used; `Token` and `Link`. Each document has an `active` value which you can manually set to false if you want disable the token or link.
 
 ## Dev Commands
 
 ```bash
 
 # Update version (updates npm version and dockerhub ci builds image)
+# > You must run this with no git changes
 npm version ... # --help
 git push --tags
 
@@ -93,7 +105,7 @@ git push --tags
 npm run lint
 
 # Run the unit tests
-npm test
+npm test -s
 
 # Generate coverage
 npm run coverage          # outputs to coverage/

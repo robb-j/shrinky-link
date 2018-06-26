@@ -56,6 +56,12 @@ exports.createLink = async function (req, res, next) {
       creator: token.id
     })
     
+    // If set, pass back a public url too
+    if (process.env.PUBLIC_URL) {
+      let base = process.env.PUBLIC_URL.replace(/\/$/, '')
+      link.public = `${base}/${link.short}`
+    }
+    
     // Send back the new link
     res.send(link)
   } catch (error) {
