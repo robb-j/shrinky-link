@@ -25,7 +25,7 @@ if (!process.env.SHRINK_KEY) {
   
   // Setup Express server and listen on port 3000
   let app = createServer()
-  await new Promise(resolve => app.listen(3000))
+  await new Promise(resolve => app.listen(3000, resolve))
   
   // Create the initial token if needed
   await addInitialToken(process.env.INIT_TOKEN, true)
