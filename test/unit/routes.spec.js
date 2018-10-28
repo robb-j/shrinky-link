@@ -1,3 +1,6 @@
+const { join } = require('path')
+require('dotenv').config({ path: join(__dirname, '../.env') })
+
 const { Link, Token } = require('../../web/models')
 const { createServer } = require('../../web/server')
 
@@ -85,13 +88,17 @@ describe('#createLink', function () {
     expect(res.status).to.equal(400)
     expect(res.body).to.deep.equal({ error: 'Not Authorized' })
   })
+  it('should add `public` if PUBLIC_URL is set', async () => {
+    let res = await agent.post('/')
+      .send({ token: token.key, url: 'https://google.com' })
+    expect(res.body.public).to.equal(`https://go.r0b.io/${res.body.short}`)
+  })
 })
 
 describe('#home', function () {
-  it('should redirect to github', async function () {
+  it('should redirect to HOME_URL', async function () {
     let res = await agent.get('/')
     expect(res.status).to.equal(302)
-    expect(res.headers.location)
-      .to.equal('https://andrsn.uk/')
+    expect(res.headers.location).to.equal('https://andrsn.uk/')
   })
 })
