@@ -10,6 +10,9 @@ const routes = require('./routes')
 exports.createServer = function (args = {}) {
   let app = express()
   
+  // Trust a reverse-proxy connection
+  app.set('trust proxy', 1)
+  
   // Parse json bodies
   app.use(bodyParser.json())
   
