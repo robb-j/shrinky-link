@@ -26,6 +26,9 @@ exports.createServer = function (args = {}) {
   // Home route
   app.get('/', routes.home)
   
+  // Health route
+  app.get('/health', routes.health)
+  
   // Creation endpoint
   app.post('/', routes.createLink)
   

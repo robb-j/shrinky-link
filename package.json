@@ -7,7 +7,7 @@
     "coverage": "nyc --reporter=html npm test",
     "coverage:summary": "nyc --reporter=text-summary npm test",
     "lint": "eslint web test",
-    "mongo:once": "docker run -it --rm -p 27017:27017 mongo",
+    "mongo:once": "docker run -it --name shrinky_mongo --rm -p 27017:27017 mongo",
     "preversion": "npm test -s",
     "start": "node web",
     "test": "mocha -r dotenv/config test/unit",

@@ -1,5 +1,6 @@
 const { Link, Token } = require('./models')
 const Hashids = require('hashids')
+const { MongoClient } = require('mongodb')
 
 // Create a hasher to generate short ids
 let hasher = new Hashids(process.env.SHRINK_KEY, 6)
@@ -66,5 +67,22 @@ exports.createLink = async function (req, res, next) {
     res.send(link)
   } catch (error) {
     next({ error: error.message })
+  }
+}
+
+// A route to test the health of the container
+exports.health = async function (req, res, next) {
+  try {
+    let db = await MongoClient.connect(process.env.MONGO_URI, {
+      autoReconnect: false,
+      keepAlive: false,
+      connectTimeoutMS: 3000,
+      reconnectTries: 0
+    })
+    await db.close()
+    res.send('healthy')
+  } catch (error) {
+    console.log(error)
+    res.status(400).send(error.message)
   }
 }
