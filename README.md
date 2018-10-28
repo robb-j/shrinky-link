@@ -81,6 +81,8 @@ curl -i http://localhost:3000/lEWxaq
 | `SHRINK_KEY` | A salt for generating unique short links, [more info](https://github.com/ivanakimov/hashids.js#more-options)
 | `HOME_URL`   | (optional) A backup url for if no path is passed, i.e. someone visits the root path |
 
+> Note: logs are saved to /app/logs which is a volume by default, but you can map it out.
+
 ## Dev Commands
 
 ```bash
